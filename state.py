@@ -4,6 +4,8 @@ class State:
         self.g = 0
         self.h = 0
         self.f = 0
+        self.zero_position = []
+        self.NextStates = []
     def set_g(self,g):
         self.g = g
     def set_h(self,h):
