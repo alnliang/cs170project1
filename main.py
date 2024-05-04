@@ -57,13 +57,17 @@ def euclidean(rep):
 #             print(rep[i][j])
                 
 
+s = State([0, 4, 2], [1, 8, 6], [5, 7, 3])
+print(euclidean(s.state_rep))
+
 print("Welcome to XXX (change this to your student ID) 8 puzzle solver.")
-option  = input( "Type “1” to use a default puzzle, or “2” to enter your own puzzle.")
+option  = input( "Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n")
 print(option)
-if option == 1:
+if option == "1":
     start_state = State([1,2,3],[4,8,0],[7,6,5])
+    print(start_state.state_rep)
 # have a predetermined state asshown 
-if option  == 2:
+if option  == "2":
     print("Enter your puzzle, use a zero to represent the blank")
     first_row = input( "Enter the first row, use commas between numbers")
     second_row = input( "Enter the second row, use commas between numbers")
@@ -72,4 +76,18 @@ if option  == 2:
     second_row = read_user_input(second_row)
     third_row = read_user_input(third_row)
     start_state = State(first_row, second_row, third_row)
-print(start_state.state_rep)
+    print(start_state.state_rep)
+
+algo = input("Enter your choice of algorithm:\n 1: Uniform Cost Search\n 2: A* with the Misplaced Tile heuristic\n 3: A* with the Euclidean Distance heuristic\n")
+
+if algo == "1":
+    # run uniform search here
+    print("You ran Uniform Cost Search\n")
+elif algo == "2":
+    #run misplaced here
+    print("You ran A* search with Misplaced Tile heuristic\n")
+elif algo == "3":
+    #run euclidean here
+    print("You ran A* search with Euclidean Distance heuristic\n")
+else:
+    print("Input not recognized. Please input 1, 2, or 3.")
