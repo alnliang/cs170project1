@@ -16,14 +16,14 @@ class State:
         self.f = 0
         #when set first poistion is x-axis, second poistion is y-axis
         self.blank_pos = []
-        self.NextStates = []
+        self.next_states = []
     def set_state_rep(self, state_rep):
         self.state_rep = state_rep
     def set_g(self,g):
         self.g = g
     def set_h(self,h):
         self.h = h
-    def set_f(self):
+    def get_f(self):
         self.f = self.h +self.g
     def set_blank_pos(self,row_pos,col_pos):
         self.blank_pos = [row_pos,col_pos]
@@ -76,17 +76,33 @@ class State:
         return child_state
     def get_next_state(self):
         valid_moves = self.find_valid_moves()
-        return 
+        # for uniform cost search makes sense right and down go before left and up
+        # right
+        if valid_moves[1] == True:
+            right_state = self.move_right()
+            self.next_states.append(right_state)
+        #down
+        if valid_moves[3] == True:
+            down_state = self.move_down()
+            self.next_states.append(down_state)
+        #left
+        if valid_moves[0] == True:
+            left_state = self.move_left()
+            self.next_states.append(left_state)
+        #up
+        if valid_moves[2] == True:
+            up_state = self.move_up()
+            self.next_states.append(up_state)
 
 #testing
-s = State([1,2,3],[4,5,6],[7,8,0])
+s = State([1,2,3],[4,0,6],[7,8,5])
 s2 = State()
 print(s.state_rep)
 print(s2.state_rep)
 print(len(s.state_rep))
 s.set_g(1)
 s.set_h(2)
-s.set_f()
+s.get_f()
 s.get_blank_pos()
 print(s.g,s.h,s.f, s.blank_pos)
 print(s.find_valid_moves())
