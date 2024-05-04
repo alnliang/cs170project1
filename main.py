@@ -45,6 +45,14 @@ def euclidean(rep):
                 res[n][j] = temp
     return res
 
+def totalEuclidean(rep):
+    res = euclidean(rep)
+    total = 0
+    for i in range(3):
+        for j in range(3):
+            total += res[i][j]
+    return total
+    
 # def printEuclidean(rep):
 #     res = euclidean(rep)
 #     for i in range(3):
@@ -66,6 +74,11 @@ def sort(frontier):
         temp1 = frontier[min]
         frontier[min] = frontier[j]
         frontier[j] = temp1
+        
+def compare_two_states(state1,state2):
+    if state1.state_rep == state2.state_rep and state1.g == state2.g and state1.h == state2.h:
+        return True
+    return False
 
 def aStarEuclidean(problem):
     nodeCount = 0
@@ -92,7 +105,13 @@ def aStarEuclidean(problem):
             explored.append(curr_state)
             nextStates = curr_state.get_next_states()
             for state in nextStates:
-                state.h = euclidean
+                state.h = totalEuclidean(state.state_rep)
+                state.get_f()
+            for state in nextStates:
+                for exploredState in explored:
+                    if(compare_two_states(state, exploredState) == False):
+                        frontier.append(curr_state)
+            sort(frontier)
                 
 def uniformCostSearch(problem):
     nodeCount = 0
