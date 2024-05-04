@@ -75,6 +75,7 @@ class State:
         next_state.set_h(self.h + 1)
         return next_state
     def get_next_states(self):
+        self.get_blank_pos()
         valid_moves = self.find_valid_moves()
         # for uniform cost search makes sense right and down go before left and up
         # right
@@ -96,17 +97,19 @@ class State:
 
 #testing
 s = State([1,2,3],[4,0,6],[7,5,8])
-s2 = State()
-print(s.state_rep)
-print(s2.state_rep)
-print(len(s.state_rep))
-s.set_g(1)
-s.set_h(2)
-s.get_f()
+# s2 = State()
+# print(s.state_rep)
+# print(s2.state_rep)
+# print(len(s.state_rep))
+# s.set_g(1)
+# s.set_h(2)
+# s.get_f()
 s.get_blank_pos()
-print(s.g,s.h,s.f, s.blank_pos)
-print(s.find_valid_moves())
+print(s.blank_pos)
+# print(s.g,s.h,s.f, s.blank_pos)
+# print(s.find_valid_moves())
 s.get_next_states()
 print(s.state_rep)
+print(s.blank_pos)
 for state in s.next_states:
     print(state.state_rep)
