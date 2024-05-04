@@ -6,11 +6,11 @@ def read_user_input(s):
     result = [int(x) for x in result]
     return result
 
-def calcuate_misplaced_tiles(curr_state, goal_state):
+def calcuate_misplaced_tiles(curr_state_rep, goal_state_rep):
     misplaced_count = 0
-    for i in range(0,3):
-        for j in range(0,3):
-            if curr_state.state_rep[i,j] != goal_state.state_rep[i,j]:
+    for i in range(len(curr_state_rep)):
+        for j in range(len(curr_state_rep)):
+            if curr_state_rep[i][j] != goal_state_rep[i][j]:
                 misplaced_count += 1
     return misplaced_count
 
