@@ -51,30 +51,30 @@ class State:
             move_right = False
         return [move_left, move_right, move_up, move_down]
     def move_up(self):
-        child_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]-1, self.blank_pos[1],self.state_rep)
-        child_state = State()
-        child_state.set_state_rep(child_state_rep)
-        child_state.set_h(self.h + 1)
-        return child_state
+        next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]-1, self.blank_pos[1],self.state_rep)
+        next_state = State()
+        next_state.set_state_rep(next_state_rep)
+        next_state.set_h(self.h + 1)
+        return next_state
     def move_left(self):
-        child_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1]-1,self.state_rep)
-        child_state = State()
-        child_state.set_state_rep(child_state_rep)
-        child_state.set_h(self.h + 1)
-        return child_state
+        next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1]-1,self.state_rep)
+        next_state = State()
+        next_state.set_state_rep(next_state_rep)
+        next_state.set_h(self.h + 1)
+        return next_state
     def move_down(self):
-        child_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]+1, self.blank_pos[1],self.state_rep)
-        child_state = State()
-        child_state.set_state_rep(child_state_rep)
-        child_state.set_h(self.h + 1)
-        return child_state
+        next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]+1, self.blank_pos[1],self.state_rep)
+        next_state = State()
+        next_state.set_state_rep(next_state_rep)
+        next_state.set_h(self.h + 1)
+        return next_state
     def move_right(self):
-        child_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1] + 1,self.state_rep)
-        child_state = State()
-        child_state.set_state_rep(child_state_rep)
-        child_state.set_h(self.h + 1)
-        return child_state
-    def get_next_state(self):
+        next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1] + 1,self.state_rep)
+        next_state = State()
+        next_state.set_state_rep(next_state_rep)
+        next_state.set_h(self.h + 1)
+        return next_state
+    def get_next_states(self):
         valid_moves = self.find_valid_moves()
         # for uniform cost search makes sense right and down go before left and up
         # right
@@ -95,7 +95,7 @@ class State:
             self.next_states.append(up_state)
 
 #testing
-s = State([1,2,3],[4,0,6],[7,8,5])
+s = State([1,2,3],[4,0,6],[7,5,8])
 s2 = State()
 print(s.state_rep)
 print(s2.state_rep)
@@ -106,3 +106,7 @@ s.get_f()
 s.get_blank_pos()
 print(s.g,s.h,s.f, s.blank_pos)
 print(s.find_valid_moves())
+s.get_next_states()
+print(s.state_rep)
+for state in s.next_states:
+    print(state.state_rep)
