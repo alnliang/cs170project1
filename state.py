@@ -55,25 +55,25 @@ class State:
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]-1, self.blank_pos[1],self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def move_left(self):
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1]-1,self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def move_down(self):
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]+1, self.blank_pos[1],self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def move_right(self):
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1] + 1,self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def get_next_states(self):
         self.get_blank_pos()
@@ -95,6 +95,9 @@ class State:
         if valid_moves[2] == True:
             up_state = self.move_up()
             self.next_states.append(up_state)
+    def print_state_rep(self):
+        for row in self.state_rep:
+            print(row)
 
 #testing
 s = State([1,2,3],[4,0,6],[7,5,8])
@@ -112,5 +115,14 @@ print(s.blank_pos)
 s.get_next_states()
 print(s.state_rep)
 print(s.blank_pos)
+print(s.g)
 for state in s.next_states:
     print(state.state_rep)
+    print(state.g)
+l1 = [1,2,3]
+curr_item = l1.pop(0)
+print(curr_item)
+arr1 = [[1,2,3],[4,5,6],[7,8,0]]
+arr2 = [[1,2,3],[4,5,6],[7,8,9]]
+print(arr1 == arr2)
+s.print_state_rep()
