@@ -55,25 +55,25 @@ class State:
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]-1, self.blank_pos[1],self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def move_left(self):
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1]-1,self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def move_down(self):
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0]+1, self.blank_pos[1],self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def move_right(self):
         next_state_rep = swap(self.blank_pos[0],self.blank_pos[1],self.blank_pos[0], self.blank_pos[1] + 1,self.state_rep)
         next_state = State()
         next_state.set_state_rep(next_state_rep)
-        next_state.set_h(self.h + 1)
+        next_state.set_g(self.g + 1)
         return next_state
     def get_next_states(self):
         self.get_blank_pos()
@@ -112,5 +112,7 @@ print(s.blank_pos)
 s.get_next_states()
 print(s.state_rep)
 print(s.blank_pos)
+print(s.g)
 for state in s.next_states:
     print(state.state_rep)
+    print(state.g)
