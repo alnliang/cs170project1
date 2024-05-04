@@ -78,6 +78,8 @@ def Astar_with_misplaced_tiles(problem):
                 for state_2 in explored:
                     if compare_two_states(state,state_2) == False:
                         frontier.append(curr_state)
+            if len(frontier) > max_in_queue:
+                max_in_queue = len(frontier)
             sort(frontier)
     return
 
