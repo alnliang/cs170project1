@@ -41,12 +41,7 @@ def euclidean(rep):
                 temp = pythagorean(n, j, temp2, temp1)
                 res[n][j] = temp
     return res
-def compare_two_states(state1,state2):
-    if state1.state_rep == state2.state_rep and state1.g == state2.g and state1.h == state2.h:
-        return True
-    return False
-def sort(frontier):
-    return
+
 def Astar_with_misplaced_tiles(problem):
     node_count = 0
     max_in_queue = 0
