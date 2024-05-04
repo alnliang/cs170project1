@@ -75,7 +75,7 @@ def Astar_with_misplaced_tiles(problem):
                         frontier.append(curr_state)
             if len(frontier) > max_in_queue:
                 max_in_queue = len(frontier)
-            sort(frontier)
+            sortStates(frontier)
     return
 
 def totalEuclidean(rep):
@@ -97,7 +97,7 @@ def totalEuclidean(rep):
 #         for j in range(3):
 #             print(rep[i][j])
                 
-def sort(frontier):
+def sortStates(frontier):
     for j in range(len(frontier)):
         min = j
         for i in range(j + 1, len(frontier)):
@@ -144,7 +144,7 @@ def aStarEuclidean(problem):
                 for exploredState in explored:
                     if(compare_two_states(state, exploredState) == False):
                         frontier.append(curr_state)
-            sort(frontier)
+            sortStates(frontier)
                 
 def uniformCostSearch(problem):
     nodeCount = 0
