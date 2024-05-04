@@ -95,6 +95,9 @@ class State:
         if valid_moves[2] == True:
             up_state = self.move_up()
             self.next_states.append(up_state)
+    def print_state_rep(self):
+        for row in self.state_rep:
+            print(row)
 
 #testing
 s = State([1,2,3],[4,0,6],[7,5,8])
@@ -116,3 +119,10 @@ print(s.g)
 for state in s.next_states:
     print(state.state_rep)
     print(state.g)
+l1 = [1,2,3]
+curr_item = l1.pop(0)
+print(curr_item)
+arr1 = [[1,2,3],[4,5,6],[7,8,0]]
+arr2 = [[1,2,3],[4,5,6],[7,8,9]]
+print(arr1 == arr2)
+s.print_state_rep()
