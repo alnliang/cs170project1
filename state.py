@@ -9,13 +9,17 @@ class State:
     def set_h(self,h):
         self.h = h
     def set_f(self):
-        self.f = self.h +self.g
-    
+        self.f = self.h +self.g        
 
 #testing
 # s = State([1,2,3],[4,5,6],[7,8,9])
 # print(s.state_rep)
+# print(s.state_rep[0][1])
 # s.set_g(1)
 # s.set_h(2)
 # s.set_f()
 # print(s.g,s.h,s.f)
+
+
+
+

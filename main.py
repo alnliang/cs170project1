@@ -17,6 +17,45 @@ def calcuate_misplaced_tiles(curr_state, goal_state):
 def calcuate_euclidean_distance(curr_state,goal_state):
     return
 
+def pythagorean(a, b, c, d):
+    dista = a - c
+    distb = b - d
+    dista *= dista
+    distb *= distb
+    totalDist = dista + distb
+    totalDist = totalDist ** 0.5
+    return totalDist
+
+def euclidean(rep):
+    res = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    for n in range(3):
+        for j in range(3):
+            if rep[n][j] == 0:
+                temp1 = 2
+                temp2 = 2
+                temp = pythagorean(n, j, 2, 2)
+                res[n][j] = temp
+            elif rep[n][j] == (n + 1) * (j + 1):
+                continue
+            else:
+                temp = rep[n][j]
+                temp1 = (temp - 1) % 3
+                temp2 = (temp - 1) / 3
+                temp = pythagorean(n, j, temp2, temp1)
+                res[n][j] = temp
+    return res
+
+# def printEuclidean(rep):
+#     res = euclidean(rep)
+#     for i in range(3):
+#         for j in range(3):
+#             print(res[i][j])
+            
+# def print2D(rep):
+#     for i in range(3):
+#         for j in range(3):
+#             print(rep[i][j])
+                
 
 print("Welcome to XXX (change this to your student ID) 8 puzzle solver.")
 option  = input( "Type “1” to use a default puzzle, or “2” to enter your own puzzle.")
