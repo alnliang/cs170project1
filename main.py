@@ -45,6 +45,14 @@ def euclidean(rep):
                 res[n][j] = temp
     return res
 
+def totalEuclidean(rep):
+    res = euclidean(rep)
+    total = 0
+    for i in range(3):
+        for j in range(3):
+            total += res[i][j]
+    return total
+    
 # def printEuclidean(rep):
 #     res = euclidean(rep)
 #     for i in range(3):
@@ -56,6 +64,75 @@ def euclidean(rep):
 #         for j in range(3):
 #             print(rep[i][j])
                 
+def sort(frontier):
+    for j in range(len(frontier)):
+        min = j
+        for i in range(j + 1, len(frontier)):
+            temp = i
+            if(frontier[min].h > frontier[temp].h):
+                min = temp
+        temp1 = frontier[min]
+        frontier[min] = frontier[j]
+        frontier[j] = temp1
+        
+def compare_two_states(state1,state2):
+    if state1.state_rep == state2.state_rep and state1.g == state2.g and state1.h == state2.h:
+        return True
+    return False
+
+def aStarEuclidean(problem):
+    nodeCount = 0
+    maxInQueue = 0
+    frontier = [problem.start_state]
+    explored = []
+    failure = False
+    while failure == False:
+        if len(frontier) == 0:
+            failure = True
+            print("Couldn't solve puzzle")  
+            break
+        curr_state = frontier.pop(0)
+        print(f"The best state to expand with {curr_state.f} and {curr_state.h} is ")
+        curr_state.print_state_rep()
+        nodeCount += 1
+        if curr_state.state_rep == problem.global_state.state_rep:
+            print("Reached Goal State")
+            print(f"To solve this problem the search algorithm expanded a total of {nodeCount} nodes.")
+            print(f"The maximum number of nodes in the queue at any one time: {maxInQueue}")
+            print(f"To solve this problem the search algorithm expanded a total of XXX {curr_state.g}nodes.")
+            break
+        else:
+            explored.append(curr_state)
+            nextStates = curr_state.get_next_states()
+            for state in nextStates:
+                state.h = totalEuclidean(state.state_rep)
+                state.get_f()
+            for state in nextStates:
+                for exploredState in explored:
+                    if(compare_two_states(state, exploredState) == False):
+                        frontier.append(curr_state)
+            sort(frontier)
+                
+def uniformCostSearch(problem):
+    nodeCount = 0
+    maxInQueue = 0
+    frontier = [problem.start_state]
+    explored = []
+    failure = False
+    while failure == False:
+        if(len(frontier) == 0):
+            failure = True
+            break
+        curr_node = frontier.pop(0)
+        nodeCount += 1
+        if curr_node.state_rep == problem.global_state.state_rep:
+            print("Goal reached")
+            break
+        else:
+            explored.append(curr_node)
+            nextStates = curr_node.get_next_states()
+            
+    
 
 s = State([0, 4, 2], [1, 8, 6], [5, 7, 3])
 print(euclidean(s.state_rep))
