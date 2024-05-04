@@ -57,7 +57,7 @@ def Astar_with_misplaced_tiles(problem):
         print(f"The best state to expand with {curr_state.f} and {curr_state.h} is ")
         curr_state.print_state_rep()
         node_count += 1
-        if curr_state.state_rep == problem.global_state.state_rep:
+        if curr_state.state_rep == problem.goal_state:
             print("Reached Goal State")
             print(f"To solve this problem the search algorithm expanded a total of {node_count} nodes.")
             print(f"The maximum number of nodes in the queue at any one time: {max_in_queue}")
@@ -65,7 +65,8 @@ def Astar_with_misplaced_tiles(problem):
             break
         else:
             explored.append(curr_state)
-            next_states = curr_state.get_next_states()
+            curr_state.get_next_states()
+            next_states = curr_state.next_states
             for state in next_states:
                 state.h = misplaced_tiles(state, problem.goal_state)
                 state.get_f()
@@ -102,7 +103,7 @@ def sortStates(frontier):
         min = j
         for i in range(j + 1, len(frontier)):
             temp = i
-            if(frontier[min].h > frontier[temp].h):
+            if(frontier[min].f > frontier[temp].f):
                 min = temp
         temp1 = frontier[min]
         frontier[min] = frontier[j]
@@ -125,26 +126,31 @@ def aStarEuclidean(problem):
             print("Couldn't solve puzzle")  
             break
         curr_state = frontier.pop(0)
-        print(f"The best state to expand with {curr_state.f} and {curr_state.h} is ")
+        print(f"The best state to expand with {curr_state.g} and {curr_state.h} is ")
         curr_state.print_state_rep()
         nodeCount += 1
-        if curr_state.state_rep == problem.global_state.state_rep:
+        if curr_state.state_rep == problem.goal_state:
             print("Reached Goal State")
             print(f"To solve this problem the search algorithm expanded a total of {nodeCount} nodes.")
             print(f"The maximum number of nodes in the queue at any one time: {maxInQueue}")
-            print(f"To solve this problem the search algorithm expanded a total of XXX {curr_state.g}nodes.")
+            print(f"The depth of the goal node was {curr_state.g}.")
             break
         else:
             explored.append(curr_state)
-            nextStates = curr_state.get_next_states()
+            curr_state.get_next_states()
+            nextStates = curr_state.next_states
             for state in nextStates:
                 state.h = totalEuclidean(state.state_rep)
                 state.get_f()
             for state in nextStates:
                 for exploredState in explored:
                     if(compare_two_states(state, exploredState) == False):
-                        frontier.append(curr_state)
+                        frontier.append(state)
+            if len(frontier) > maxInQueue:
+                maxInQueue = len(frontier)
             sortStates(frontier)
+                
+
                 
 def uniformCostSearch(problem):
     nodeCount = 0
@@ -153,19 +159,34 @@ def uniformCostSearch(problem):
     explored = []
     failure = False
     while failure == False:
+        #print("Length of frontier", len(frontier))
         if(len(frontier) == 0):
             failure = True
+            print("Couldn't solve")
             break
         curr_node = frontier.pop(0)
         nodeCount += 1
-        if curr_node.state_rep == problem.global_state.state_rep:
-            print("Goal reached")
-            break
-        else:
-            explored.append(curr_node)
-            nextStates = curr_node.get_next_states()
+        print(f"The best state to expand with {curr_node.g} is ")
+        curr_node.print_state_rep()
+        if curr_node.state_rep == problem.goal_state:
+            print("Reached Goal State")
+            print(f"To solve this problem the search algorithm expanded a total of {nodeCount} nodes.")
+            print(f"The maximum number of nodes in the queue at any one time: {maxInQueue}")
+            print(f"The depth of the goal node was {curr_node.g}.")
+            break 
+        explored.append(curr_node)
+        curr_node.get_next_states()
+        nextStates = curr_node.next_states
+        #print("Nextstates: ", len(nextStates))
+        for states in nextStates:
+            frontier.append(states)
+            #print("Length after append: ", len(frontier))
+        if len(frontier) > maxInQueue:
+            maxInQueue = len(frontier)
             
-    
+s = State([1,2,0],[4, 5, 3],[7, 8, 6])
+p = Problem(s)
+uniformCostSearch(p)
 
 # s = State([0, 4, 2], [1, 8, 6], [5, 7, 3])
 # print(euclidean(s.state_rep))
