@@ -10,6 +10,8 @@ def misplaced_tiles(curr_state_rep, goal_state_rep):
     misplaced_count = 0
     for i in range(len(curr_state_rep)):
         for j in range(len(curr_state_rep)):
+            if(curr_state_rep[i][j] == 0):
+                continue
             if curr_state_rep[i][j] != goal_state_rep[i][j]:
                 misplaced_count += 1
     return misplaced_count
@@ -28,10 +30,7 @@ def euclidean(rep):
     for n in range(3):
         for j in range(3):
             if rep[n][j] == 0:
-                temp1 = 2
-                temp2 = 2
-                temp = pythagorean(n, j, 2, 2)
-                res[n][j] = temp
+                continue
             elif rep[n][j] == (n + 1) * (j + 1):
                 continue
             else:
@@ -75,6 +74,8 @@ def Astar_with_misplaced_tiles(problem):
                 for exploredState in explored:
                     if(compare_two_states(state, exploredState) == False):
                         frontier.append(state)
+                    else:
+                        continue
             if len(frontier) > max_in_queue:
                 max_in_queue = len(frontier)
             sortStates(frontier)
@@ -111,9 +112,10 @@ def sortStates(frontier):
         frontier[j] = temp1
         
 def compare_two_states(state1,state2):
-    if state1.state_rep == state2.state_rep and state1.g == state2.g and state1.h == state2.h:
+    if state1.state_rep == state2:
         return True
     return False
+    
 
 def aStarEuclidean(problem):
     nodeCount = 0
@@ -127,6 +129,7 @@ def aStarEuclidean(problem):
             print("Couldn't solve puzzle")  
             break
         curr_state = frontier.pop(0)
+        explored.append(curr_state.state_rep)
         print(f"The best state to expand with {curr_state.g} and {curr_state.h} is ")
         curr_state.print_state_rep()
         nodeCount += 1
@@ -135,18 +138,30 @@ def aStarEuclidean(problem):
             print(f"To solve this problem the search algorithm expanded a total of {nodeCount} nodes.")
             print(f"The maximum number of nodes in the queue at any one time: {maxInQueue}")
             print(f"The depth of the goal node was {curr_state.g}.")
+            for exploredStates in explored:
+                exploredState.print_state_rep()
+                print('\n')
             break
         else:
-            explored.append(curr_state)
             curr_state.get_next_states()
             nextStates = curr_state.next_states
             for state in nextStates:
                 state.h = totalEuclidean(state.state_rep)
                 state.get_f()
+            # print("Explored state: ")
+            # for exploredStates in explored:
+            #     #exploredStates.print_state_rep()
+            #     print('\n')
+            print("Explored state: ", len(explored))
             for state in nextStates:
                 for exploredState in explored:
                     if(compare_two_states(state, exploredState) == False):
+                        # print("True\n")
+                        # state.print_state_rep()
+                        # print('\n')
                         frontier.append(state)
+                    else:
+                        continue
             if len(frontier) > maxInQueue:
                 maxInQueue = len(frontier)
             sortStates(frontier)
@@ -166,6 +181,7 @@ def uniformCostSearch(problem):
             print("Couldn't solve")
             break
         curr_node = frontier.pop(0)
+        explored.append(curr_node.state_rep)
         nodeCount += 1
         print(f"The best state to expand with {curr_node.g} is ")
         curr_node.print_state_rep()
@@ -174,20 +190,32 @@ def uniformCostSearch(problem):
             print(f"To solve this problem the search algorithm expanded a total of {nodeCount} nodes.")
             print(f"The maximum number of nodes in the queue at any one time: {maxInQueue}")
             print(f"The depth of the goal node was {curr_node.g}.")
+            # for exploredStates in explored:
+            #     print(exploredStates)
+            #     print('\n')
             break 
-        explored.append(curr_node)
         curr_node.get_next_states()
         nextStates = curr_node.next_states
         #print("Nextstates: ", len(nextStates))
         for states in nextStates:
-            frontier.append(states)
-            #print("Length after append: ", len(frontier))
+            for exploredState in explored:
+                if(compare_two_states(states, exploredState) == False):
+                    #print("True\n")
+                    #states.print_state_rep()
+                    #print('\n')
+                    frontier.append(states)
+                        #print("Length after append: ", len(frontier))
         if len(frontier) > maxInQueue:
             maxInQueue = len(frontier)
             
-s = State([1,2,0],[4, 5, 3],[7, 8, 6])
+s = State([8,7,1], [6,0,2], [5,4,3])
+veryEasy = State([1,2,3], [4,5,6], [7,0,8])
+doable = State([0, 1, 2], [4, 5, 3], [7, 8, 6])
+impossible = State([1, 2, 3], [4, 5, 6], [8, 7, 0])
+impossible2 = State([1, 2, 3], [4, 5, 6], [8, 7, 0])
+# print(compare_two_states(impossible, impossible2))
 p = Problem(s)
-Astar_with_misplaced_tiles(p)
+uniformCostSearch(p)
 
 # s = State([0, 4, 2], [1, 8, 6], [5, 7, 3])
 # print(euclidean(s.state_rep))
