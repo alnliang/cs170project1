@@ -54,6 +54,7 @@ def Astar_with_misplaced_tiles(problem):
             print("Couldn't solve puzzle")
             break
         curr_state = frontier.pop(0)
+        curr_state.set_h(misplaced_tiles(curr_state.state_rep, problem.goal_state))
         print(f"The best state to expand with {curr_state.f} and {curr_state.h} is ")
         curr_state.print_state_rep()
         node_count += 1
@@ -61,19 +62,19 @@ def Astar_with_misplaced_tiles(problem):
             print("Reached Goal State")
             print(f"To solve this problem the search algorithm expanded a total of {node_count} nodes.")
             print(f"The maximum number of nodes in the queue at any one time: {max_in_queue}")
-            print(f"To solve this problem the search algorithm expanded a total of XXX {curr_state.g}nodes.")
+            print(f"The depth of the goal node was {curr_state.g} nodes.")
             break
         else:
             explored.append(curr_state)
             curr_state.get_next_states()
             next_states = curr_state.next_states
             for state in next_states:
-                state.h = misplaced_tiles(state, problem.goal_state)
+                state.h = misplaced_tiles(state.state_rep, problem.goal_state)
                 state.get_f()
             for state in next_states:
-                for state_2 in explored:
-                    if compare_two_states(state,state_2) == False:
-                        frontier.append(curr_state)
+                for exploredState in explored:
+                    if(compare_two_states(state, exploredState) == False):
+                        frontier.append(state)
             if len(frontier) > max_in_queue:
                 max_in_queue = len(frontier)
             sortStates(frontier)
@@ -186,7 +187,7 @@ def uniformCostSearch(problem):
             
 s = State([1,2,0],[4, 5, 3],[7, 8, 6])
 p = Problem(s)
-uniformCostSearch(p)
+Astar_with_misplaced_tiles(p)
 
 # s = State([0, 4, 2], [1, 8, 6], [5, 7, 3])
 # print(euclidean(s.state_rep))
