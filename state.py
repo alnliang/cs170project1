@@ -108,21 +108,21 @@ s = State([1,2,3],[4,0,6],[7,5,8])
 # s.set_g(1)
 # s.set_h(2)
 # s.get_f()
-s.get_blank_pos()
-print(s.blank_pos)
-# print(s.g,s.h,s.f, s.blank_pos)
-# print(s.find_valid_moves())
-s.get_next_states()
-print(s.state_rep)
-print(s.blank_pos)
-print(s.g)
-for state in s.next_states:
-    print(state.state_rep)
-    print(state.g)
-l1 = [1,2,3]
-curr_item = l1.pop(0)
-print(curr_item)
-arr1 = [[1,2,3],[4,5,6],[7,8,0]]
-arr2 = [[1,2,3],[4,5,6],[7,8,9]]
-print(arr1 == arr2)
-s.print_state_rep()
+# s.get_blank_pos()
+# print(s.blank_pos)
+# # print(s.g,s.h,s.f, s.blank_pos)
+# # print(s.find_valid_moves())
+# s.get_next_states()
+# print(s.state_rep)
+# print(s.blank_pos)
+# print(s.g)
+# for state in s.next_states:
+#     print(state.state_rep)
+#     print(state.g)
+# l1 = [1,2,3]
+# curr_item = l1.pop(0)
+# print(curr_item)
+# arr1 = [[1,2,3],[4,5,6],[7,8,0]]
+# arr2 = [[1,2,3],[4,5,6],[7,8,9]]
+# print(arr1 == arr2)
+# s.print_state_rep()
