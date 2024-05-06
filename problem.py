@@ -5,38 +5,38 @@ class Problem:
         self.start_state = start_state
         self.goal_state =[[1,2,3],[4,5,6],[7,8,0]]
 
-import heapq
-
-def uniform_cost_search(Problem):
-    frontier = [(Problem.start_state.g, Problem.start_state)]  # Priority queue (heap) to store states based on their cost
-    explored = set()  # To keep track of visited states
+def general_problem(Problem):
+    frontier = [Problem.start_state]
+    explored = []
+    can_explore = True
     count = 0
-
-    while frontier:
+    while can_explore:
         count += 1
-        print(count, "node")
-        
-        _, curr_state = heapq.heappop(frontier)  # Pop state with the lowest cost from the frontier
+        print(count , "node")
+        # print(len(frontier))
+        # for state in frontier:
+        #     state.print_state_rep()
+        #     print("-------")
+        if len(frontier) == 0:
+            print("Fails")
+            break
+        curr_state = frontier.pop(0)
         print("Current State")
         curr_state.print_state_rep()
-        
-        if curr_state.state_rep == Problem.goal_state:  # Check if current state is the goal state
+        explored.append(curr_state.state_rep)
+        if curr_state.state_rep == Problem.goal_state:
             print("Reached Goal")
+            can_explore = False
             break
-        print(explored)
-        if curr_state.state_rep not in explored:  # Convert list to tuple before checking membership
-            explored.add(tuple(curr_state.state_rep))   # Mark the state as visited
-            
-            curr_state.get_next_states()  # Generate possible next states
-            
-            for next_state in curr_state.next_states:
-                heapq.heappush(frontier, (next_state.g, next_state))  # Push next states into the frontier
+        curr_state.get_next_states()
+        same = True
     
+        for next_state in curr_state.next_states:
+            if next_state.state_rep not in explored:
+                print("added to frontier")
+                next_state.print_state_rep()
+                frontier.append(next_state)
     print(len(explored), count)
-
-# Example usage:
-# uniform_cost_search(YourProblemObject)
-
         
 
 veryEasy = State([1,2,3], [4,5,6], [7,0,8])
@@ -45,7 +45,7 @@ doable = State([0, 1, 2], [4, 5, 3], [7, 8, 6])
 
 s = State([1,2,3], [4,8,0], [7,6,5])
 p = Problem(s)
-uniform_cost_search(p)
+general_problem(p)
 arr1 = [[1,1],[2,2]]
 arr2 = [[1,1],[2,2]]
 arr3 = [[1,1],[1,2]]
